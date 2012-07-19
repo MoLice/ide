@@ -1,0 +1,12 @@
+# == django ==
+# templates
+snippet %
+	{% ${1} %}
+snippet block
+	{% block ${1:block_name} %}${2}{% endblock %}
+snippet extends
+	{% extends '${1:dir}' %}
+snippet include
+	{% include '${1:include}' %}
+snippet //
+	{# ${1} #}
