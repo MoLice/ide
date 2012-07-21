@@ -271,3 +271,28 @@ let g:snippets_dir='$VIMRUNTIME/snippets'
 let g:snips_author="MoLice"
 ino <c-j> <c-r>=TriggerSnippet()<cr>
 snor <c-j> <esc>i<right><c-r>=TriggerSnippet()<cr>
+
+"""""""""""""""""""""""
+" zendCoding配置
+"""""""""""""""""""""""
+let g:user_zen_settings = {
+\   'lang': "zh-cn",
+\   'charset': "utf-8",
+\   'less': {
+\       'extends': 'css',
+\       '@i': '@import url(|);'
+\   },
+\   'html': {
+\       'snippets': {
+\           'html': "<!DOCTYPE html>\n"
+\               ."<html lang=\"${lang}\">\n"
+\               ."<head>\n"
+\               ."\t<meta charset=\"${charset}\">\n"
+\               ."\t<title></title>\n"
+\               ."\t<style></style>\n"
+\               ."</head>\n"
+\               ."<body>\n\t${child}|\n</body>\n"
+\               ."</html>"
+\       }
+\   }
+\}
