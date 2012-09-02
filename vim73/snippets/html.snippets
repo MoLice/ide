@@ -87,6 +87,12 @@ snippet mhtml
 	${2}
 	</body>
 	</html>
+snippet link
+	<link type="text/css" rel="stylesheet" href="${1}" />
+snippet js
+	<script type="text/javascript">
+	${1}
+	</script>
 snippet base
 	<base href="${1}" target="${2}"`Close()`>
 snippet r
@@ -225,15 +231,15 @@ snippet #
 snippet inc
 	<%#include(${1})%>
 # if语句
-snippet %if
+snippet tif
 	<%@if($${1}$=${2})%>
 	<%endif%>
 # DTD
-snippet dtd
+snippet tdtd
 	<%#include(s#tDocumentType)%>
 	${1}
 # html
-snippet %html
+snippet thtml
 	<%#include(s#tDocumentType)%>
 	<html>
 	<head>
@@ -245,10 +251,10 @@ snippet %html
 	</body>
 	</html>
 # link style
-snippet link
+snippet tlink
 	<link rel="stylesheet" type="text/css" href="<%@GetResFullName($css_path$${1:css filename}.css)%>" />
 # script
-snippet js
+snippet tjs
 	<script type="text/javascript" src="<%@GetResFullName($js_path$${1:js filename}.js)%>"></script>
 # idolgo开发，暂时添加
 snippet sss

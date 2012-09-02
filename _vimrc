@@ -21,6 +21,7 @@ syntax on                   " 打开语法高亮
 set number                  " 显示行号
 filetype plugin on          " 检测文件类型
 filetype indent on
+set diffopt+=vertical       " 默认垂直分割窗口进行对比
 set sessionoptions-=curdir
 set sessionoptions+=sesdir
 set autoread                " 自动重新加载被外部更新的文件
@@ -28,6 +29,7 @@ set nobackup                " 取消自动备份
 set ruler                   " 编辑时在右下角显示光标位置的状态行
 set showcmd                 " 显示当前正在键入的命令
 set tags=tags;              " 将tags文件添加进来
+set bsdir=buffer
 set autochdir               " 自动切换目录为当前文件所在目录
 set iskeyword+=_,$,@,%,#,-  " 带有如下符号的单词不要被换行分割
 set ff=unix
@@ -81,9 +83,9 @@ set linespace=4             " 行高
 set nowrap                  " 禁止自动折行
 set autoindent              " 自动缩进
 set cindent
-set shiftwidth=4            " 统一缩进为4
-set tabstop=4               " Tab宽度为4
-set softtabstop=4           " 使用backspace时可一次性删除4个空格
+set shiftwidth=2            " 统一缩进为4
+set tabstop=2               " Tab宽度为4
+set softtabstop=2           " 使用backspace时可一次性删除4个空格
 set expandtab               " 使用空格代替Tab
 set listchars=tab:>-,trail:-
                             " 使用-来显示Tab
@@ -93,7 +95,7 @@ if has("autocmd")
     autocmd FileType javascript setlocal ts=2 sts=2 sw=2 expandtab
     autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
     autocmd FileType less setlocal ts=2 sts=2 sw=2 expandtab
-    autocmd FileType html setlocal ts=4 sts=4 sw=4 expandtab
+    autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab
     autocmd FileType php setlocal ts=4 sts=4 sw=4 expandtab
 endif
 " 字体设置
@@ -151,6 +153,9 @@ nmap <leader>j :set ft=javascript<CR>
 nmap <leader>d :set ft=htmldjango<CR>
 nmap <leader>p :set ft=php<CR>
 nmap <leader>l :set ft=less<CR>
+" F功能键
+nmap <F7> :call CompileGCC()<CR>
+nmap <F8> :call Change_curr_dir()<CR>
 
 " 编辑器标签卡快捷键
 nmap tt :tabnew<CR>
@@ -177,6 +182,11 @@ nmap pr :Project<CR>
 nmap <leader>r \r<CR>
 
 " === #6 拓展功能 ===
+function! CompileGCC()
+    exec "w"
+    " C程序
+    exec "!gcc -o %<.exe % -I /GNUstep/GNUstep/System/Library/Headers -L /GNUstep/GNUstep/System/Library/Libraries -lobjc -fobjc-exceptions -lgnustep-base -fconstant-string-class=NSConstantString -enable-auto-import"
+endfunction
 
 " HTML标签补全
 function! InsertHtmlTag()
@@ -200,7 +210,6 @@ function! Change_curr_dir()
   exec 'cd '._dir
   unlet _dir
 endfunction
-imap <F8> :call Change_curr_dir()
 
 " 设置html文件的语法补全函数
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
