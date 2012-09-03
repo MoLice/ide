@@ -798,20 +798,7 @@ au BufNewFile,BufRead *.hex,*.h32		setf hex
 au BufNewFile,BufRead *.t.html			setf tilde
 
 " HTML (.shtml and .stm for server side)
-au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm  call s:FThtml()
-
-" Distinguish between HTML, XHTML and Django
-func! s:FThtml()
-  let n = 1
-  while n < 10 && n < line("$")
-    if getline(n) =~ '{%\s*\(extends\|block\)\>'
-      setf htmldjango
-      return
-    endif
-    let n = n + 1
-  endwhile
-  setf xhtml
-endfunc
+au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm  setf xhtml
 
 " HTML with Ruby - eRuby
 au BufNewFile,BufRead *.erb,*.rhtml		setf eruby

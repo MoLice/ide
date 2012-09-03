@@ -14,6 +14,20 @@
 
 let tlist_js_settings='javascript;s:string;a:array;o:object;f:function'
 autocmd! bufwritepost _vimrc source $VIM/_vimrc
+" 判断是否为QMTemplate
+autocmd! BufRead *.html call IsQmt()
+function! IsQmt()
+  let s:n = 1
+  let s:lines = line("$")
+  while s:n <= s:lines
+    if getline(s:n) =~ "<%"
+      setf qmt
+      return
+    endif
+    let s:n = s:n + 1
+  endwhile
+endfunction
+
                             " 在_vimrc被更新后自动应用最新配置
 set langmenu=zh_CN.UTF-8    " 设置菜单显示编码
 set helplang=cn
@@ -21,6 +35,7 @@ syntax on                   " 打开语法高亮
 set number                  " 显示行号
 filetype plugin on          " 检测文件类型
 filetype indent on
+filetype detect
 set diffopt+=vertical       " 默认垂直分割窗口进行对比
 set sessionoptions-=curdir
 set sessionoptions+=sesdir
@@ -134,11 +149,6 @@ nmap <leader>i :e $VIM/_vimrc<CR>
 nmap <leader>s :mksession! ~\VimTemp.vim<CR>:wviminfo! ~\VimTemp.viminfo<CR>
 nmap <leader>o :source ~\VimTemp.vim<CR>:rviminfo ~\VimTemp.viminfo<CR>
 
-" 快速打开服务器上的文件
-nmap <leader>th :e \\10.6.208.17\dev\qqmail\webmail4\template\zh_cn\htmledition\exs_ftn_new.html<CR>
-nmap <leader>tc :e \\10.6.208.17\dev\qqmail\webmail4\htdocs\zh_cn\htmledition\style\ft_new.css<CR>
-
-
 " 模仿MS Windows中的快捷键
 vmap <C-c> "+y
 vmap <C-x> "yd
@@ -148,9 +158,9 @@ nmap <C-a> ggvG$
 
 " 强行设置设置文件类型
 nmap <leader>h :set ft=xhtml<CR>
+nmap <leader>t :set ft=qmt<CR>
 nmap <leader>c :set ft=css<CR>
 nmap <leader>j :set ft=javascript<CR>
-nmap <leader>d :set ft=htmldjango<CR>
 nmap <leader>p :set ft=php<CR>
 nmap <leader>l :set ft=less<CR>
 " F功能键

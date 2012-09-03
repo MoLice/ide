@@ -1,6 +1,8 @@
 # Some useful Unicode entities
 # Non-Breaking Space
 # QQMail Template
+snippet now
+	`strftime("%Y-%m-%d")`${1}
 snippet &k
 	&nbsp;${1}
 # ©
@@ -216,7 +218,7 @@ snippet jr
 # == QQMail Template ==
 # 如果为了避免和其他缩写的冲突，可在关键词前加%，也即模板标签%
 # 模板标签
-snippet %
+snippet t
 	<% ${1} %>
 # 变量
 snippet $
@@ -233,7 +235,7 @@ snippet inc
 # if语句
 snippet tif
 	<%@if($${1}$=${2})%>
-	<%endif%>
+	<%@endif%>
 # DTD
 snippet tdtd
 	<%#include(s#tDocumentType)%>

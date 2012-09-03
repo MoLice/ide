@@ -1,0 +1,40 @@
+# QMTemplate
+snippet now
+	`strftime("%Y-%m-%d")`${1}
+# 模板标签
+snippet t
+	<% ${1} %>
+# 变量
+snippet $
+	$${1}$${2}
+# 函数
+snippet @
+	<%@${1:FuncName}(${2})%>
+snippet tfunc
+	<%@${1:FuncName}(${2})%>
+# 子模板
+snippet #
+	<%#${1}%>
+# include
+snippet inc
+	<%#include(${1})%>
+# if语句
+snippet tif
+	<%@if($${1}$=${2})%>
+	<%@endif%>
+snippet tife
+	<%@if($${1}$=${2})%>
+	<%@else%>
+	<%@endif%>
+snippet tels
+	<%@else%>
+# DTD
+snippet tdtd
+	<%#include(s#tDocumentType)%>
+	${1}
+# link style
+snippet tlink
+	<link rel="stylesheet" type="text/css" href="<%@GetResFullName($css_path$${1:css filename}.css)%>" />
+# script
+snippet tjs
+	<script type="text/javascript" src="<%@GetResFullName($js_path$${1:js filename}.js)%>"></script>
