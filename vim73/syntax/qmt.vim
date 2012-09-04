@@ -37,30 +37,39 @@ runtime! syntax/xhtml.vim
 syntax case match
 
 " 基本模板标签
-syntax region qmtTagBlock start=/<%/ end=/%>/ contains=qmtStatement,qmtFuncName,qmtVariable oneline
-syntax region qmtFuncTagBlock start=/<%@/ end=/%>/ contains=qmtFuncArgument,qmtVariable,qmtStatement,qmtNumber oneline
-" 注释
-syntax region qmtComment start=/<%##/ end=/##%>/ contains=qmtTodo
+syntax region qmtNodeName matchgroup=qmtTagNode start=/<%/ skip=/[^a-zA-Z0-9]/ end=/%>/ oneline
+syntax region qmtSection matchgroup=qmtTagSec start="<%#[/]\=" end="%>" oneline
+syntax region qmtFuncTagBlock matchgroup=qmtTagFunc start=/<%@/ end=/%>/ contains=qmtFuncArgument,qmtStatement oneline
+" 模板函数，TODO start里匹配到的statement高亮错误
+syntax region qmtFuncArgument matchgroup=qmtFuncName start=/[a-zA-Z0-9_]\+(/ end=/)/ contains=qmtVariable,qmtFuncArgument,qmtNumber contained keepend oneline
 " 关键字
 syntax keyword qmtStatement if else elseif endif for endfor contained
-" 左右临近@/%这些字符，会被看成一个单词，所以需要再次匹配
-syntax match qmtStatement /@\(if\|else\|elseif\|endif\|for\|endfor\)\s*%\=/ms=s+1,me=e-1 contained
+" 临近%会被看成一个单词，所以需要再次匹配
+syntax match qmtStatement /\(if\|else\|elseif\|endif\|for\|endfor\)[(%]/me=e-1 contained
 " 数字
-syntax match qmtNumber /\d/ contained
+syntax match qmtNumber /\<\d\>/ contained
 " 模板TODO
 syntax keyword qmtTodo TODO FIXME XXX contained
 " 模板变量
 syntax match qmtVariable /\$[a-zA-Z0-9][a-zA-Z0-9_]*\$/ contains=qmtGlobalVar contained
-" 模板函数
-syntax region qmtFuncArgument matchgroup=qmtFuncName start=/[a-zA-Z0-9_]\+(/ end=/)/ contains=qmtVariable,qmtStatement contained
 " 全局变量
 syntax match qmtGlobalVar /DATA\|uid\|username/ contained
+" 注释
+syntax region qmtComment start=/<%##/ end=/##%>/ contains=qmtTodo
 
 " TODO 增加更多错误检测
 " 模板标签错误
-syntax match qmtTagError /%>\|<[^%].*%>/
+syntax match qmtTagError /%>\|<[^%][^%]*%>\|<%[^%]*[^%]>\|<%@%\|<%%/
+" 结构语句错误
+syntax match qmtStatementError /<%\s*\(if\|else\|elseif\|endif\|for\|endfor\)\s*[(%]/
 
-if version >= 508 || !exists("did_django_syn_inits")
+" 为与html配合而做的额外处理
+" 重新定义html标签，使其可以包含qmt模板标签
+syntax region htmlTag start=+<[^/%]+ end=+>+ contains=htmlTagN,htmlString,htmlArg,htmlValue,htmlTagError,htmlEvent,htmlCssDefinition,@htmlPreproc,@htmlArgCluster,javaScript,qmtNodeName,qmtFuncTagBlock,qmtComment
+" 让字符串内可包含qmt
+syntax region htmlString start=/"/ end=/"/ contains=qmtNodeName,qmtFuncTagBlock,qmtComment
+
+if version >= 508 || !exists("did_qmt_syn_inits")
   if version < 508
     let did_django_syn_inits = 1
     command -nargs=+ HiLink hi link <args>
@@ -68,20 +77,27 @@ if version >= 508 || !exists("did_django_syn_inits")
     command -nargs=+ HiLink hi def link <args>
   endif
 
-  HiLink qmtTagBlock PreProc
-  HiLink qmtFuncTagBlock PreProc
+  HiLink qmtComment Comment
 
+  HiLink qmtTagNode PreProc
+  HiLink qmtTagSec PreProc
+  HiLink qmtTagFunc PreProc
+  HiLink qmtFuncTagBlock Function
+
+  HiLink qmtNodeName Identifier
+  HiLink qmtSection Identifier
   HiLink qmtVariable Identifier
-  HiLink qmtFuncName Function
+  HiLink qmtFuncName Identifier
 
   HiLink qmtStatement Statement
 
   HiLink qmtGlobalVar Special
 
   HiLink qmtNumber Number
+  HiLink qmtHtmlString String
 
-  HiLink qmtComment Comment
   HiLink qmtTagError Error
+  HiLink qmtStatementError Error
   HiLink qmtTodo Todo
 
   delcommand HiLink
