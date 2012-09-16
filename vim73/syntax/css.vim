@@ -193,7 +193,7 @@ syn match cssRenderAttr contained "\<marker\>"
 syn match cssRenderProp contained "\<\(display\|marker-offset\|unicode-bidi\|white-space\|list-item\|run-in\|inline-table\)\>"
 syn keyword cssRenderProp contained position top bottom direction
 syn match cssRenderProp contained "\<\(left\|right\)\>"
-syn keyword cssRenderAttr contained block inline compact
+syn keyword cssRenderAttr contained block inline compact inline-block
 syn match cssRenderAttr contained "\<table\(-\(row-gorup\|\(header\|footer\)-group\|row\|column\(-group\)\=\|cell\|caption\)\)\=\>"
 syn keyword cssRenderAttr contained static relative absolute fixed
 syn keyword cssRenderAttr contained ltr rtl embed bidi-override pre nowrap
