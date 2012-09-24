@@ -4,6 +4,7 @@
 " Maintainer:   MoLice <molicechen@tencent.com>
 " Last Change:  2012-09-04
 " Remark:       基于html语法高亮的基础，增加模板语言高亮。
+" TODO          让script内可包含qmt
 " 缺少完整的模板语法检查，只供高亮阅读的便利。
 " 1. 在vimrc配置文件里添加文件类型检测
 " autocmd! BufRead *.html call IsQmt()
@@ -39,8 +40,8 @@ syntax case match
 " 基本模板标签
 syntax region qmtNodeName matchgroup=qmtTagNode start=/<%/ skip=/[^a-zA-Z0-9]/ end=/%>/ oneline
 syntax region qmtSection matchgroup=qmtTagSec start="<%#[/]\=" end="%>" oneline
-syntax region qmtFuncTagBlock matchgroup=qmtTagFunc start=/<%@/ end=/%>/ contains=qmtFuncArgument,qmtStatement oneline
-" 模板函数，TODO start里匹配到的statement高亮错误
+syntax region qmtFuncTagBlock matchgroup=qmtTagFunc start=/<%@/ end=/%>/ contains=qmtFuncArgument,qmtStatement,qmtGlobalVar oneline
+" 模板函数
 syntax region qmtFuncArgument matchgroup=qmtFuncName start=/[a-zA-Z0-9_]\+(/ end=/)/ contains=qmtVariable,qmtFuncArgument,qmtNumber contained keepend oneline
 " 关键字
 syntax keyword qmtStatement if else elseif endif for endfor contained

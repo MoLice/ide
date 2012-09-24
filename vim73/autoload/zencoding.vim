@@ -395,7 +395,7 @@ function! zencoding#expandAbbr(mode, abbr) range
       let expand = substitute(expand, '${datetime}', strftime("%Y-%m-%dT%H:%M:%S") . s:zen_settings.timezone, 'g')
     else
       " TODO: on windows, %z/%Z is 'Tokyo(Standard)'
-      let expand = substitute(expand, '${datetime}', strftime("%Y-%m-%dT%H:%M:%S %z"), 'g')
+      let expand = substitute(expand, '${datetime}', strftime("%Y-%m-%d"), 'g')
     endif
     if a:mode == 2 && visualmode() ==# 'v'
       if a:firstline == a:lastline

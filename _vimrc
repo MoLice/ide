@@ -297,10 +297,6 @@ snor <c-j> <esc>i<right><c-r>=TriggerSnippet()<cr>
 let g:user_zen_settings = {
 \   'lang': "zh-cn",
 \   'charset': "utf-8",
-\   'less': {
-\       'extends': 'css',
-\       '@i': '@import url(|);'
-\   },
 \   'html': {
 \       'snippets': {
 \           'html': "<!DOCTYPE html>\n"
@@ -311,7 +307,20 @@ let g:user_zen_settings = {
 \               ."\t<style></style>\n"
 \               ."</head>\n"
 \               ."<body>\n\t${child}|\n</body>\n"
-\               ."</html>"
+\               ."</html>",
+\           'now': strftime("%Y-%m-%d"),
+\           'cr': "@create " . strftime("%Y-%m-%d"),
+\           'au': "@author molicechen<sf_molice@qq.com>",
+\           'cmd': "<!-- | -->",
+\           't': "<%|%>",
+\           'tfn': "<%@|()%>",
+\           'tif': "<%@if(|)%>\n<%@endif%>",
+\           'tife': "<%@if(|)%>\n<%@else%>\n<%@endif%>",
+\           'else': "<%@else%>|",
+\           'tcmd': "<%## | ##%>"
+\       },
+\       'default_attributes': {
+\           'link': [{'rel': 'stylesheet'}, {'type': 'text/css'}, {'href': '<%@GetResFullName(|)%>'}],
 \       }
 \   }
 \}
