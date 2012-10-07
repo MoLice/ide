@@ -14,6 +14,7 @@
 
 let tlist_js_settings='javascript;s:string;a:array;o:object;f:function'
 autocmd! bufwritepost _vimrc source $VIM/_vimrc
+                            " 在_vimrc被更新后自动应用最新配置
 " 判断是否为QMTemplate
 autocmd! BufRead *.html call IsQmt()
 function! IsQmt()
@@ -28,7 +29,6 @@ function! IsQmt()
   endwhile
 endfunction
 
-                            " 在_vimrc被更新后自动应用最新配置
 set langmenu=zh_CN.UTF-8    " 设置菜单显示编码
 set helplang=cn
 syntax on                   " 打开语法高亮
@@ -44,7 +44,6 @@ set autoread                " 自动重新加载被外部更新的文件
 set nobackup                " 取消自动备份
 set ruler                   " 编辑时在右下角显示光标位置的状态行
 set showcmd                 " 显示当前正在键入的命令
-set tags=tags;              " 将tags文件添加进来
 set bsdir=buffer
 set autochdir               " 自动切换目录为当前文件所在目录
 set iskeyword+=_,$,@,%,#,-  " 带有如下符号的单词不要被换行分割
@@ -99,8 +98,8 @@ set linespace=4             " 行高
 set nowrap                  " 禁止自动折行
 set autoindent              " 自动缩进
 set cindent
-set shiftwidth=2            " 统一缩进为4
-set tabstop=2               " Tab宽度为4
+set shiftwidth=2            " 统一缩进为2
+set tabstop=2               " Tab宽度为2
 set softtabstop=2           " 使用backspace时可一次性删除4个空格
 set expandtab               " 使用空格代替Tab
 "set list
@@ -112,7 +111,7 @@ if has("autocmd")
     autocmd FileType javascript setlocal ts=2 sts=2 sw=2 expandtab
     autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
     autocmd FileType less setlocal ts=2 sts=2 sw=2 expandtab
-    autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab
+    autocmd FileType html setlocal ts=4 sts=4 sw=4 expandtab
     autocmd FileType php setlocal ts=4 sts=4 sw=4 expandtab
 endif
 " 字体设置

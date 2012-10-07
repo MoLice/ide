@@ -49,6 +49,8 @@ syntax keyword qmtStatement if else elseif endif for endfor contained
 syntax match qmtStatement /\(if\|else\|elseif\|endif\|for\|endfor\)[(%]/me=e-1 contained
 " 数字
 syntax match qmtNumber /\<\d\>/ contained
+" TODO 运算符
+"syntax match qmtOperator /<>+-=(!=\+)/ contained
 " 模板TODO
 syntax keyword qmtTodo TODO FIXME XXX contained
 " 模板变量
@@ -96,6 +98,7 @@ if version >= 508 || !exists("did_qmt_syn_inits")
 
   HiLink qmtNumber Number
   HiLink qmtHtmlString String
+  "HiLink qmtOperator Operator
 
   HiLink qmtTagError Error
   HiLink qmtStatementError Error
