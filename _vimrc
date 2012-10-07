@@ -36,6 +36,7 @@ set number                  " 显示行号
 filetype plugin on          " 检测文件类型
 filetype indent on
 filetype detect
+set nocompatible            " 不支持vi兼容模式
 set diffopt+=vertical       " 默认垂直分割窗口进行对比
 set sessionoptions-=curdir
 set sessionoptions+=sesdir
@@ -102,8 +103,9 @@ set shiftwidth=2            " 统一缩进为4
 set tabstop=2               " Tab宽度为4
 set softtabstop=2           " 使用backspace时可一次性删除4个空格
 set expandtab               " 使用空格代替Tab
-set listchars=tab:>-,trail:-
-                            " 使用-来显示Tab
+"set list
+"set listchars=tab:>-,trail:-
+                            " 使用>-来显示Tab，用-来显示尾部空白字符
 "set foldlevel=100           " 设置vim启动时不开启代码折叠
 " 为不同文件设置不同缩进
 if has("autocmd")
@@ -164,6 +166,8 @@ nmap <leader>j :set ft=javascript<CR>
 nmap <leader>p :set ft=php<CR>
 nmap <leader>l :set ft=less<CR>
 " F功能键
+map <F5> :call CommentLines()<CR>
+map <F6> :call UnCommentLines()<CR>
 nmap <F7> :call CompileGCC()<CR>
 nmap <F8> :call Change_curr_dir()<CR>
 
@@ -213,6 +217,27 @@ function! InsertHtmlTag()
     :call cursor(save_cursor[1], save_cursor[2], save_cursor[3])
 endfunction
 inoremap > <ESC>:call InsertHtmlTag()<CR>a
+
+" F5 注释选中行
+function! CommentLines()
+  if &ft =~ 'javascript'
+    :s/^\(\/\/\s*\)\=/\/\/ /g
+    :s/^\/\/\s*$//ge
+  elseif &ft =~ 'html'
+    :s/^\(<!--\s*\)\=/<!-- /g
+    :s/\(\s*-->\)\=$/ -->/g
+    :s/^<!--\s*-->$//ge
+  endif
+endfunction
+" F6 取消选中行注释
+function! UnCommentLines()
+  if &ft =~ 'javascript'
+    :s/^\/\/\s*//ge
+  elseif &ft =~ 'html'
+    :s/^<!--\s*//ge
+    :s/\s*-->//ge
+  endif
+endfunction
 
 " F8 将路径指向当前文件所在路径
 function! Change_curr_dir()
